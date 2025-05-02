@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <main>
+        <button onclick="window.location.href = 'index.html'">Zurück</button>
+
+        <div id="container">
+            <div id="bestellung">
+                <div>
+                    <h6>Name:</h6>
+                    <p id="name"></p>
+                </div>
+                <div>
+                    <h6>Klasse:</h6>
+                    <p id="klasse"></p>
+                </div>
+                <div>
+                    <p>Datum:</p>
+                    <h4 id="datum"></h4>
+                </div>
+
+                <h4>Bestellungen:</h4>
+                <p id="bestellung"></p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const template = document.getElementById("bestellung").cloneNode(true);
+        document.getElementById("bestellung").remove();
+
+        setTimeout(() => {
+            let bestellungsStr;
+            const bestellungsIndex = COLUMNS.indexOf("bestellung");
+            let temp;
+
+            console.log(allRows);
+
+            console.log(allRows);
+            console.log("COLUMNS: " + COLUMNS);
+
+            allRows.forEach(element => {
+                console.log(element)
+                console.log(element.length)
+
+                temp = template;
+
+                element[bestellungsIndex].forEach(element2 => {
+                    bestellungsStr += `${element2[1]}x ${element2[0]}\n`;
+                })
+
+                element[bestellungsIndex] = bestellungsStr.replace(/undefined/g, '');
+
+                for (let i = 0; i < (element.length); i++) {
+                    temp.querySelector("#" + COLUMNS[i]).innerText = element[i];
+                }
+
+                document.getElementById("container").appendChild(temp);
+            });
+        }, 3000);
+    </script>
+</body>
+</html>

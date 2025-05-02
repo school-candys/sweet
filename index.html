@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <script src="script.js"></script>
+
+    <main>
+        <h1>Bestellungen an's ARG</h1>
+
+        <div>
+            <datalist id="bestellungen">
+                <option value="Bestellung 1"></option>
+                <option value="Bestellung 2"></option>
+                <option value="Bestellung 3"></option>
+                <option value="Bestellung 4"></option>
+            </datalist>
+
+            <button id="addingredient">+ Bestellung</button>
+            <button onclick="deleteClonedObjekt('letcloneCount')" style="background-color: #ff5722;">- Bestellung</button>
+
+            <div id="bestellungcontainer">
+                <div id="bestellungen0">
+                    <input type="text" list="bestellungen" id="bestellung" placeholder="Bestellung">
+                    <input type="number" value="1" id="bestellungsanzahl">
+                </div>
+            </div>
+            <hr>
+
+            <input type="date" id="datum">
+
+            <input type="name" id="name" placeholder="Name">
+            <input type="class" id="klasse" placeholder="Klasse">
+        </div>
+
+        <button type="submit" class="primary" onclick="save()">bestellen</button>
+        <button style="width: 10rem; margin-top: 5rem; margin-left: calc(50% - (10rem / 2)); display: flex; justify-content: center;" onclick="window.location.href = 'password.html'">Bestellungen ansehen</button>
+    </main>
+
+    <script>
+        let cloneCount = 0;
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById("addingredient").addEventListener("click", () => {
+                cloneCount++;
+                console.log("Clone Count: " + cloneCount);
+
+                let newIngredient = document.getElementById("bestellungen0").cloneNode(true);
+                newIngredient.id = "bestellungen" + cloneCount;
+
+                document.getElementById("bestellungcontainer").appendChild(newIngredient);
+            })
+        });
+
+        function deleteClonedObjekt(tempid) {
+            let id = 0;
+
+            if (tempid == "letcloneCount") {
+                if (cloneCount == 0) {
+                    return;
+                }
+                id = "bestellungen" + cloneCount;
+            } else {
+                id = tempid;
+            }
+
+            console.log(id);
+            document.getElementById(id).remove();
+
+            if (cloneCount > 1) {
+                cloneCount--;
+            }
+        }
+    </script>
+</body>
+</html>
