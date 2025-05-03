@@ -12,23 +12,40 @@
 
         <div id="container">
             <div id="bestellung">
-                <div>
-                    <h6>Name:</h6>
+                <div class="EE">
                     <p id="name"></p>
                 </div>
-                <div>
-                    <h6>Klasse:</h6>
+                <div class="EE">
                     <p id="klasse"></p>
                 </div>
-                <div>
-                    <p>Datum:</p>
+                <div class="EE">
                     <h4 id="datum"></h4>
                 </div>
-
-                <h4>Bestellungen:</h4>
-                <p id="bestellung"></p>
+                
+                <div class="IOO">
+                    <p id="bestellung"></p>
+                </div>
             </div>
         </div>
+
+        <style>
+            #container{
+                overflow-x: auto;
+            }
+            #container > div{
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .EE {
+                width: 33%;
+            }
+
+            .IOO {
+                width: 100%;
+            }
+        </style>
     </main>
 
     <script>
@@ -36,7 +53,7 @@
         document.getElementById("bestellung").remove();
 
         setTimeout(() => {
-            let bestellungsStr;
+            let bestellungsStr = "";
             const bestellungsIndex = COLUMNS.indexOf("bestellung");
             let temp;
 
@@ -44,24 +61,39 @@
 
             console.log(allRows);
             console.log("COLUMNS: " + COLUMNS);
+            let cloneNode = 0;
 
             allRows.forEach(element => {
                 console.log(element)
                 console.log(element.length)
 
-                temp = template;
+                temp = template.cloneNode(true);
 
                 element[bestellungsIndex].forEach(element2 => {
                     bestellungsStr += `${element2[1]}x ${element2[0]}\n`;
                 })
 
                 element[bestellungsIndex] = bestellungsStr.replace(/undefined/g, '');
+                bestellungsStr = "";
+
+                let days = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+                let date = new Date(element[COLUMNS.indexOf("datum")]);
+                
+                let day = days[date.getDay()];
+                let dd = String(date.getDate()).padStart(2, '0');
+                let mm = String(date.getMonth() + 1).padStart(2, '0');
+
+                element[COLUMNS.indexOf("datum")] = `${day} ${dd}.${mm}.`;
 
                 for (let i = 0; i < (element.length); i++) {
                     temp.querySelector("#" + COLUMNS[i]).innerText = element[i];
                 }
 
+                temp.id = cloneNode;
                 document.getElementById("container").appendChild(temp);
+                console.log(`appendChild ${cloneNode}`);
+
+                cloneNode++;
             });
         }, 3000);
     </script>
